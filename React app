@@ -1,0 +1,30 @@
+npx create-react-app courses-frontend
+Install Axios
+npm install axios
+
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+function CourseList() {
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/courses')
+      .then(response => setCourses(response.data))
+      .catch(error => console.error(error));
+  }, []);
+
+  return (
+    <div>
+      <h1>Courses</h1>
+      <ul>
+        {courses.map(course => (
+          <li key={course.id}>{course.title} - {course.code}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default CourseList;
