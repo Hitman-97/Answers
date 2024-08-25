@@ -1,0 +1,4 @@
+FROM openjdk:11-jre-slim
+VOLUME /tmp
+COPY target/courses-api.jar courses-api.jar
+ENTRYPOINT ["java","-jar","/courses-api.jar"]
