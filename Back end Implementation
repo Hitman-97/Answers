@@ -1,0 +1,36 @@
+first of all we have to create a Route in 'web.php':
+
+Route::get('/api/search', 'SearchController@search');
+
+after that you have to make the search controller
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Product;
+
+class SearchController extends Controller
+{
+    public function search(Request $request)
+    {
+        $query = $request->input('q');
+        $products = Product::where('name', 'LIKE', "%$query%")->get(['id', 'name', 'image', 'price']);
+        return response()->json($products);
+    }
+}
+
+In order to complete it you have to make a product model with it
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Product extends Model
+{
+    protected $fillable = ['name', 'image', 'price'];
+}
+
+
